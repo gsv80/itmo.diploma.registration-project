@@ -1,21 +1,24 @@
-package com.itmo.projects_registration.service;
+package com.itmo.projects_registration.security;
 
 import java.util.Optional;
 import org.springframework.security.core.userdetails.User.UserBuilder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.stereotype.Service;
 
 import com.itmo.projects_registration.domain.Manager;
 import com.itmo.projects_registration.domain.ManagerRepository;
 
+@Service
 public class UserDetailsServiceImpl implements UserDetailsService{
 	
-	private final ManagerRepository managerRepo;
-
 	public UserDetailsServiceImpl(ManagerRepository managerRepo) {
 		this.managerRepo = managerRepo;
 	}
+
+	private final ManagerRepository managerRepo;
+
 	
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {

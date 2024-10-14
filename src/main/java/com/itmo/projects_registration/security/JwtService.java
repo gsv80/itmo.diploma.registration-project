@@ -1,4 +1,4 @@
-package com.itmo.projects_registration.service;
+package com.itmo.projects_registration.security;
 
 import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Component;
@@ -27,8 +27,8 @@ public class JwtService {
     }
 	
 	public String getAuthUser(HttpServletRequest request) {
-	    String token = request.getHeader
-	        (HttpHeaders.AUTHORIZATION);
+	    String token = request.getHeader(HttpHeaders.AUTHORIZATION);
+	    
 	    if (token != null) {
 	      String user = Jwts.parserBuilder()
 	      .setSigningKey(key)
@@ -36,6 +36,7 @@ public class JwtService {
 	      .parseClaimsJws(token.replace(PREFIX, ""))
 	      .getBody()
 	      .getSubject();
+	      
 	      if (user != null)
 	        return user;
 	    }

@@ -96,9 +96,9 @@ public class ProjectsRegistrationApplication implements CommandLineRunner {
 		Place place3 = new Place("Tverskaya", "Tver", "Moskovskoe av.", "11B ", 123456, "KNS-5", company2);
 		placeRepo.saveAll(Arrays.asList(place1, place2, place3));
 		
-		Registration reg1 = new Registration("kb0304856", manager2, manager2, 100000000D, place1, company1, null, false);
-		Registration reg2 = new Registration("kb0304857", manager2, manager2, 100000000D, place3, company1, null, true);
-		Registration reg3 = new Registration("kb0304859", manager2, manager2, 100000000D, place2, company1, null, true);
+		Registration reg1 = new Registration("kb0304856", manager2, manager2, place1, company1, null, false);
+		Registration reg2 = new Registration("kb0304857", manager2, manager2, place3, company1, null, true);
+		Registration reg3 = new Registration("kb0304859", manager2, manager2, place2, company1, null, true);
 		registrRepo.saveAll(Arrays.asList(reg1, reg2, reg3));
 		
 		Invoice invoice1 = new Invoice("PPI-060924-1112", 110000D, true, manager1, reg1);

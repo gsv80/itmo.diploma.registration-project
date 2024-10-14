@@ -24,19 +24,19 @@ public class Registration {
 	public Registration() {}
 
 	public Registration(String registrationId, Manager creator, Manager responsibleManager,
-			double validityTime, Place place, Company client, List<Invoice> invoices,
+			Place place, Company client, List<Invoice> invoices,
 			boolean registrationState) {
 		super();
 		this.registrationId = registrationId;
 		this.creationDate = new GregorianCalendar().getTime();
 		this.creator = creator;
 		this.responsibleManager = responsibleManager;
-		this.validityTime = validityTime;
 		this.prolongationTime = new GregorianCalendar().getTime();
 		this.place = place;
 		this.client = client;
 		this.invoices = invoices;
 		this.registrationState = registrationState;
+//		this.relizeDate = new GregorianCalendar().getTime();
 	}
 
 	@Id
@@ -46,6 +46,7 @@ public class Registration {
 	private String registrationId;
 	
 	private Date creationDate;
+	private Date relizeDate;
 	
 	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="creator", referencedColumnName= "managerId")
@@ -55,7 +56,6 @@ public class Registration {
 	@JoinColumn(name="responsibleManager", referencedColumnName= "managerId")
 	private Manager responsibleManager;
 	
-	private double validityTime;
 	private Date prolongationTime;
 	
 	
@@ -113,13 +113,6 @@ public class Registration {
 		this.responsibleManager = responsibleManager;
 	}
 
-	public double getValidityTime() {
-		return validityTime;
-	}
-
-	public void setValidityTime(double validityTime) {
-		this.validityTime = validityTime;
-	}
 
 	public Date getProlongationTime() {
 		return prolongationTime;
@@ -159,6 +152,14 @@ public class Registration {
 
 	public void setRegistrationState(boolean registrationState) {
 		this.registrationState = registrationState;
+	}
+
+	public Date getRelizeDate() {
+		return relizeDate;
+	}
+
+	public void setRelizeDate(Date relizeDate) {
+		this.relizeDate = relizeDate;
 	}
 
 }

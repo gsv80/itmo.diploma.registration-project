@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.itmo.projects_registration.domain.AccountCredentials;
-import com.itmo.projects_registration.service.JwtService;
+import com.itmo.projects_registration.security.JwtService;
 
 @RestController
 public class LoginController {
@@ -22,6 +22,7 @@ public class LoginController {
         this.jwtService = jwtService;
         this.authenticationManager = authenticationManager;
     }
+    
     @PostMapping("/login")
     public ResponseEntity<?> getToken(@RequestBody AccountCredentials credentials) {
     	UsernamePasswordAuthenticationToken creds = new UsernamePasswordAuthenticationToken(
