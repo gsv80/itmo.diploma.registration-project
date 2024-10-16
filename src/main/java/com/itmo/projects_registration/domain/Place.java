@@ -17,7 +17,7 @@ import jakarta.persistence.OneToMany;
 
 @Entity
 @JsonIgnoreProperties({"hibernateLazyInitializer","handler"})
-public class Place extends Addresses {
+public class Place extends Address {
 
 	public Place() {}
 	

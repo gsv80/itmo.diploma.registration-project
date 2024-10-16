@@ -3,10 +3,10 @@ package com.itmo.projects_registration.domain;
 import jakarta.persistence.MappedSuperclass;
 
 @MappedSuperclass
-public class Addresses {
+public class Address {
 
-	public Addresses() {}
-	public Addresses(String region, String city, String street, String building, Integer postalCode) {
+	public Address() {}
+	public Address(String region, String city, String street, String building, Integer postalCode) {
 		super();
 		this.region = region;
 		this.city = city;
