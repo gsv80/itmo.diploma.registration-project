@@ -49,8 +49,8 @@ public class CompanyController {
 	public ResponseEntity<Company> update(@RequestBody Company company, @PathVariable("id") Long id) {
 		try{
 			Company existCompany = service.get(id);
-			service.save(existCompany);
-			return new ResponseEntity<Company>(company , HttpStatus.OK);
+			service.save(company);
+			return new ResponseEntity<Company>(HttpStatus.OK);
 		} catch (NoSuchElementException ex) {
 			return new ResponseEntity<Company>(HttpStatus.NOT_FOUND);
 		}
