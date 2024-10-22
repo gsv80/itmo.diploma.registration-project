@@ -31,6 +31,8 @@ public class SecurityConfig {
 	private final AuthenticationFilter authenticationFilter;
 	private final AuthEntryPoint exceptionHandler;
 	
+	private static final String[] SWAGGER_PATHS = {"/api-docs/**", "/swagger-ui/**"};
+	
 	public SecurityConfig(UserDetailsServiceImpl userDetailsService,AuthenticationFilter authenticationFilter,  AuthEntryPoint exceptionHandler){ 
 		this.userDetailsService = userDetailsService;
 		this.exceptionHandler = exceptionHandler;
@@ -42,22 +44,29 @@ public class SecurityConfig {
 	}
     
 	@Bean
-    public AuthenticationManager uthenticationManager(AuthenticationConfiguration authConfig) throws Exception {
-        return authConfig.getAuthenticationManager();
-	}
-	
-	@Bean
 	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 		http.csrf((csrf) -> csrf.disable()).cors(withDefaults())
         .sessionManagement((sessionManagement) -> sessionManagement
 		.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
         .authorizeHttpRequests((authorizeHttpRequests) -> authorizeHttpRequests.requestMatchers(
-    		HttpMethod.POST, "/login").permitAll().anyRequest().authenticated())
+    		HttpMethod.POST, "/login").permitAll()
+		.requestMatchers(SWAGGER_PATHS).permitAll()
+		.anyRequest().authenticated())
         .addFilterBefore(authenticationFilter, UsernamePasswordAuthenticationFilter.class)
         .exceptionHandling((exceptionHandling) -> exceptionHandling
     		.authenticationEntryPoint(exceptionHandler));
 
 	    return http.build();
+	}
+	
+	@Bean
+	public PasswordEncoder passwordEncoder() {
+		return new BCryptPasswordEncoder();
+	}
+	
+	@Bean
+	public AuthenticationManager uthenticationManager(AuthenticationConfiguration authConfig) throws Exception {
+		return authConfig.getAuthenticationManager();
 	}
 	
 	@Bean
@@ -69,12 +78,9 @@ public class SecurityConfig {
 	    config.setAllowedHeaders(Arrays.asList("*"));
 	    config.setAllowCredentials(false);
 	    config.applyPermitDefaultValues();
+	    
 	    source.registerCorsConfiguration("/**", config);
 	    return source;
 	}
 	
-	@Bean
-	public PasswordEncoder passwordEncoder() {
-		return new BCryptPasswordEncoder();
-	}
 }

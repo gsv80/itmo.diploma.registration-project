@@ -21,4 +21,6 @@ public interface RegistrationRepository extends CrudRepository<Registration, Lon
 	
 	List<Registration> findByResponsibleManager(@Param("responsibleManager") Manager responsibleManager);
 	
+	//List<Equipment> findByEquipment(@Param("equipment") Equipment equipment);
+	
 }
