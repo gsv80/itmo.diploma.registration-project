@@ -34,8 +34,4 @@ public class RegistrationService {
 		registrationRepo.deleteById(id);
 	}
 	
-	public List<Registration> findByClient(Company client){
-		return registrationRepo.findByClient(client);
-	}
-	
 }

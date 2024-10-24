@@ -1,6 +1,9 @@
 package com.itmo.projects_registration;
 
 import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.CommandLineRunner;
@@ -65,18 +68,14 @@ public class ProjectsRegistrationApplication implements CommandLineRunner {
 	
 	@Override
     public void run(String... args) throws Exception {
-		Equipment equipment1 = new Equipment("WQ");
+		
+		Equipment equipment1 = new Equipment("WQ" );
 		Equipment equipment2 = new Equipment("SSC");
 		equipRepo.saveAll(Arrays.asList(equipment1, equipment2));
-		
 		
 		Department depTech = new Department("Tech support");
 		Department depSales = new Department("Sales");
 		depRepo.saveAll(Arrays.asList(depTech, depSales));
-		
-//		Roles roleAdmin = new Roles("admin");
-//		Roles roleUser = new Roles("user");
-//		roleRepo.saveAll(Arrays.asList(roleAdmin, roleUser));
 		
 		Manager manager1 = new Manager("ivan", "ivanov", RoleEnum.USER, depTech , "user", "$2a$10$NVM0n8ElaRgg7zWO1CxUdei7vWoPg91Lz2aYavh9.f9q0e4bRadue");
 		Manager manager2 = new Manager("petr", "petrov", RoleEnum.ADMIN, depSales, "admin", "$2a$10$8cjz47bjbR4Mn8GMg9IZx.vyjhLXR/SKKMSZ9.mP9vpMu0ssKi8GW");
@@ -96,9 +95,25 @@ public class ProjectsRegistrationApplication implements CommandLineRunner {
 		Place place3 = new Place("Tverskaya", "Tver", "Moskovskoe av.", "11B ", 123456, "KNS-5", company2);
 		placeRepo.saveAll(Arrays.asList(place1, place2, place3));
 		
+		
+		
 		Registration reg1 = new Registration("kb0304856", manager2, manager2, place1, company1, null, false);
+		
+		Equipment equipment3 = new Equipment("WQ-W" );
+		Equipment equipment4 = new Equipment("SSC-G");
+		
+		
+		equipRepo.saveAll(Arrays.asList(equipment1, equipment2));
+		reg1.addEquipment(equipment3);
+		reg1.addEquipment(equipment2);
+		
 		Registration reg2 = new Registration("kb0304857", manager2, manager2, place3, company1, null, true);
+		reg2.addEquipment(equipment4);
+		
 		Registration reg3 = new Registration("kb0304859", manager2, manager2, place2, company1, null, true);
+		reg3.addEquipment(equipment1);
+		
+		
 		registrRepo.saveAll(Arrays.asList(reg1, reg2, reg3));
 		
 		Invoice invoice1 = new Invoice("PPI-060924-1112", 110000D, true, manager1, reg1);

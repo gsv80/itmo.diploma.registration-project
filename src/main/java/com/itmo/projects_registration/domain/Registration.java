@@ -2,7 +2,9 @@ package com.itmo.projects_registration.domain;
 
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -14,8 +16,10 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
+
 
 @Entity
 @JsonIgnoreProperties({"hibernateLazyInitializer","handler"})
@@ -25,7 +29,8 @@ public class Registration {
 
 	public Registration(String registrationId, Manager creator, Manager responsibleManager,
 			Place place, Company client, List<Invoice> invoices,
-			boolean registrationState) {
+			boolean registrationState
+			) {
 		super();
 		this.registrationId = registrationId;
 		this.creationDate = new GregorianCalendar().getTime();
@@ -37,6 +42,7 @@ public class Registration {
 		this.invoices = invoices;
 		this.registrationState = registrationState;
 //		this.relizeDate = new GregorianCalendar().getTime();
+		
 	}
 
 	@Id
@@ -72,6 +78,19 @@ public class Registration {
 	private List<Invoice> invoices;
 	
 	private boolean registrationState;
+	
+	
+	@ManyToMany(fetch = FetchType.LAZY, mappedBy = "registrations")
+    private Set<Equipment> equipments = new HashSet<>();
+	
+	public void addEquipment(Equipment equipment){
+        this.equipments.add(equipment);
+        equipment.getRegistrations().add(this);
+    }
+    public void removeEquipment(Equipment equipment){
+    	this.equipments.remove(equipment);
+        equipment.getRegistrations().remove(this);
+    }
 
 	public Long getId() {
 		return id;
@@ -160,6 +179,14 @@ public class Registration {
 
 	public void setRelizeDate(Date relizeDate) {
 		this.relizeDate = relizeDate;
+	}
+
+	public Set<Equipment> getEquipments() {
+		return equipments;
+	}
+
+	public void setEquipments(Set<Equipment> equipments) {
+		this.equipments = equipments;
 	}
 
 }
