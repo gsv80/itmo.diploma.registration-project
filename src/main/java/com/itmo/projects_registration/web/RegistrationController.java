@@ -1,8 +1,10 @@
 package com.itmo.projects_registration.web;
 
 import java.util.List;
+import java.util.Map;
 import java.util.NoSuchElementException;
 
+//import org.hibernate.mapping.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,10 +14,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.itmo.projects_registration.domain.Company;
 import com.itmo.projects_registration.domain.Registration;
 import com.itmo.projects_registration.service.RegistrationService;
 
@@ -42,11 +42,6 @@ public class RegistrationController {
 		}
 	}
 	
-	@GetMapping("/registrations/{company}")
-    public List<Registration> findByClient(@PathVariable("client") Company client ) {
-        return service.findByClient(client);
-    }
-	
 	@PostMapping("/registrations")
 	public void create(@RequestBody Registration registration) {
 		service.save(registration);
@@ -69,5 +64,13 @@ public class RegistrationController {
 		service.delete(id);		
 	}
 	
+	// logic for application  
+
+	@GetMapping("/registrations/client")
+	public ResponseEntity<Registration> findByClient(@RequestBody Registration registration, @PathVariable("client") String client){
+		
+		return new ResponseEntity<Registration>(registration , HttpStatus.OK);
+		
+	}
 	
 }

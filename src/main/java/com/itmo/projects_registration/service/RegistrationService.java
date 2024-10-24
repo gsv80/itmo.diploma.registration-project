@@ -1,5 +1,6 @@
 package com.itmo.projects_registration.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +15,8 @@ public class RegistrationService {
 
 	@Autowired
 	private RegistrationRepository registrationRepo;
+	
+	private final List<Registration> registrations = new ArrayList<>();
 	
 	public List<Registration> listAll(){
 		return (List<Registration>) registrationRepo.findAll();
@@ -31,12 +34,8 @@ public class RegistrationService {
 		registrationRepo.deleteById(id);
 	}
 	
-//	public List<Registration> getByClient(Company company) {
-//		return registrationRepo.findByClient(company);
-//	}
-	
-	public List<Registration> findByClient(Company client) {
-        return registrationRepo.findByClient(client);
-    }
+	public List<Registration> findByClient(Company client){
+		return registrationRepo.findByClient(client);
+	}
 	
 }

@@ -8,6 +8,8 @@ import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 
 @RepositoryRestResource
 public interface RegistrationRepository extends CrudRepository<Registration, Long> {
+	
+
 
 	//client,creation_date,creator,place,prolongation_time,registration_id,registration_state,responsible_manager,validity_time
 	
